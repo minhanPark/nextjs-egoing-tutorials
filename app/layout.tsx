@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import Control from "./components/Control";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const res = await fetch("http://localhost:3001/topics");
+  const res = await fetch("http://localhost:3001/topics", {
+    cache: "no-store",
+  });
   const topics = await res.json();
   return (
     <html lang="en">
@@ -38,17 +41,7 @@ export default async function RootLayout({
         {children}
         <br />
         <hr />
-        <ul>
-          <li>
-            <Link href="/create">Create</Link>
-          </li>
-          <li>
-            <Link href="/update/1">Update</Link>
-          </li>
-          <li>
-            <input type="button" value="delete" />
-          </li>
-        </ul>
+        <Control />
       </body>
     </html>
   );

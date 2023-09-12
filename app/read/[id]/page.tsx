@@ -4,11 +4,16 @@ interface Props {
   };
 }
 
-export default function Page({ params }: Props) {
+export default async function Page({ params }: Props) {
+  const res = await fetch(`http://localhost:3001/topics/${params.id}`);
+  const topic = await res.json();
   return (
     <>
-      <h2>read</h2>
+      <br />
+      <hr />
+      <h2>{topic.title}</h2>
       <p>parameters: {params.id}</p>
+      <p>{topic.body}</p>
     </>
   );
 }
